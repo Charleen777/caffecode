@@ -1,0 +1,18 @@
+#train_net: "prototxt/train.prototxt"
+#train_net: "prototxt/deep_train.prototxt"
+train_net: "prototxt/vgg5_lstm5/train.prototxt"
+
+lr_policy: "step"
+gamma: 0.1
+stepsize: 10000
+base_lr: 0.0001
+
+display: 1
+max_iter: 1000000 #7000000
+momentum: 0.9
+weight_decay: 0.0005
+
+snapshot: 1000
+snapshot_prefix: "snapshots/vgg5_lstm5"
+solver_mode: GPU
+#debug_info: true

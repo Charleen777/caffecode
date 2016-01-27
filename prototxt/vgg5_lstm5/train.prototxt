@@ -1,0 +1,4388 @@
+name: "VGG5-LSTM5"
+
+########################################################
+#
+#      Data Input
+#
+########################################################
+
+layer{
+  name: "data"
+  type: "ImageSegData" 
+  top: "data"
+  top: "label"
+  image_data_param {
+    root_folder: "../dataset/SiftFlowDataset/"
+    source: "../dataset/SiftFlowDataset/trainList.txt"
+    label_type: PIXEL
+    batch_size: 1 #16 #30
+    shuffle: false
+  }
+  transform_param {
+    mean_value: 108.5138  # SiftFlowDataset
+    mean_value: 115.3204
+    mean_value: 114.9225
+    crop_size: 0
+    mirror: false
+  }
+  include: { phase: TRAIN }
+}
+layer{
+  name: "data"
+  type: "ImageSegData" 
+  top: "data"
+  top: "label"
+  image_data_param {
+    root_folder: "../dataset/SiftFlowDataset/"
+    source: "../dataset/SiftFlowDataset/trainList.txt"
+    label_type: PIXEL
+    batch_size: 1 #16 #30
+  }
+  transform_param {
+    mean_value: 108.5138  # SiftFlowDataset
+    mean_value: 115.3204
+    mean_value: 114.9225
+    crop_size: 0
+    mirror: false
+  }
+  include: { phase: TEST }
+}
+
+layer {
+  bottom: "label"
+  top: "label_shrink"
+  name: "label_shrink"
+  type: "Interp"
+  interp_param {
+    shrink_factor: 4
+    pad_beg: 0
+    pad_end: 0
+  }
+}
+########################################################
+#
+#      Feature Extraction via VGG-16 Pool5
+#
+########################################################
+
+layer {
+  bottom: "data"
+  top: "conv1_1"
+  name: "conv1_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv1_1"
+  top: "conv1_1"
+  name: "relu1_1"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv1_1"
+  top: "conv1_2"
+  name: "conv1_2"
+  type: "Convolution"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv1_2"
+  top: "conv1_2"
+  name: "relu1_2"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv1_2"
+  top: "pool1"
+  name: "pool1"
+  type: "Pooling"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  bottom: "pool1"
+  top: "conv2_1"
+  name: "conv2_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv2_1"
+  top: "conv2_1"
+  name: "relu2_1"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv2_1"
+  top: "conv2_2"
+  name: "conv2_2"
+  type: "Convolution"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv2_2"
+  top: "conv2_2"
+  name: "relu2_2"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv2_2"
+  top: "pool2"
+  name: "pool2"
+  type: "Pooling"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  bottom: "pool2"
+  top: "conv3_1"
+  name: "conv3_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv3_1"
+  top: "conv3_1"
+  name: "relu3_1"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv3_1"
+  top: "conv3_2"
+  name: "conv3_2"
+  type: "Convolution"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv3_2"
+  top: "conv3_2"
+  name: "relu3_2"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv3_2"
+  top: "conv3_3"
+  name: "conv3_3"
+  type: "Convolution"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv3_3"
+  top: "conv3_3"
+  name: "relu3_3"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv3_3"
+  top: "pool3"
+  name: "pool3"
+  type: "Pooling"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  bottom: "pool3"
+  top: "conv4_1"
+  name: "conv4_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv4_1"
+  top: "conv4_1"
+  name: "relu4_1"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv4_1"
+  top: "conv4_2"
+  name: "conv4_2"
+  type: "Convolution"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv4_2"
+  top: "conv4_2"
+  name: "relu4_2"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv4_2"
+  top: "conv4_3"
+  name: "conv4_3"
+  type: "Convolution"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv4_3"
+  top: "conv4_3"
+  name: "relu4_3"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv4_3"
+  top: "pool4"
+  name: "pool4"
+  type: "Pooling"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  bottom: "pool4"
+  top: "conv5_1"
+  name: "conv5_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv5_1"
+  top: "conv5_1"
+  name: "relu5_1"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv5_1"
+  top: "conv5_2"
+  name: "conv5_2"
+  type: "Convolution"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv5_2"
+  top: "conv5_2"
+  name: "relu5_2"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv5_2"
+  top: "conv5_3"
+  name: "conv5_3"
+  type: "Convolution"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  bottom: "conv5_3"
+  top: "conv5_3"
+  name: "relu5_3"
+  type: "ReLU"
+}
+layer {
+  bottom: "conv5_3"
+  top: "pool5"
+  name: "pool5"
+  type: "Pooling"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+
+layer {
+  name: "upsample/pool5"
+  type: "Deconvolution"
+  bottom: "pool5"
+  top: "upsample/pool5"
+  convolution_param {
+    kernel_size: 16		#{{2 * factor - factor % 2}}
+    stride: 8			#{{factor}}
+    num_output: 512   		#{{C}}
+    pad: 4			#{{ceil((factor - 1) / 2.)}}
+    bias_term: false
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+
+########################################################
+#
+#      Transition Layer
+#
+########################################################
+
+layer {
+  name: "lstm_input"
+  type: "Transpose"
+  bottom: "upsample/pool5"
+  top: "lstm_input"
+  transpose_param {
+    transposetype: LSTMINPUT
+  }
+}
+layer {
+  name: "zero_data"
+  type: "ZerosData"
+  top: "lstm_mem_seed"
+  zeros_data_param {
+    shape: 4096  #batch number
+    shape: 64
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/0"
+  top: "lstm0/m/0"
+  name: "lstm0/0"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/0/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/0"
+  top: "lstm0/h/0"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/1"
+  top: "lstm0/m/1"
+  name: "lstm0/1"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/1/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/1"
+  top: "lstm0/h/1"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/2"
+  top: "lstm0/m/2"
+  name: "lstm0/2"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/2/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/2"
+  top: "lstm0/h/2"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/3"
+  top: "lstm0/m/3"
+  name: "lstm0/3"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/3/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/3"
+  top: "lstm0/h/3"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/4"
+  top: "lstm0/m/4"
+  name: "lstm0/4"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/4/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/4"
+  top: "lstm0/h/4"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/5"
+  top: "lstm0/m/5"
+  name: "lstm0/5"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/5/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/5"
+  top: "lstm0/h/5"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/6"
+  top: "lstm0/m/6"
+  name: "lstm0/6"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/6/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/6"
+  top: "lstm0/h/6"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/7"
+  top: "lstm0/m/7"
+  name: "lstm0/7"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/7/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/7"
+  top: "lstm0/h/7"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm_input"
+  bottom: "lstm_mem_seed"
+  top: "lstm0/h/8"
+  top: "lstm0/m/8"
+  name: "lstm0/8"
+  type: "LstmUnit"
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  param{
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm0/8/drop"
+  type: "Dropout"
+  bottom: "lstm0/h/8"
+  top: "lstm0/h/8"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "concat0/h"
+  type: "Concat"
+  #bottom: "lstm0/h/0" # depth dimension
+  bottom: "lstm0/h/1" # 8 connected dimension
+  bottom: "lstm0/h/2"
+  bottom: "lstm0/h/3"
+  bottom: "lstm0/h/4"
+  bottom: "lstm0/h/5"
+  bottom: "lstm0/h/6"
+  bottom: "lstm0/h/7"
+  bottom: "lstm0/h/8"
+  top: "concat0/h" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "concat0/m"
+  type: "Concat"
+  #bottom: "lstm0/m/0" # depth dimension
+  bottom: "lstm0/m/1" # 8 connected dimension
+  bottom: "lstm0/m/2"
+  bottom: "lstm0/m/3"
+  bottom: "lstm0/m/4"
+  bottom: "lstm0/m/5"
+  bottom: "lstm0/m/6"
+  bottom: "lstm0/m/7"
+  bottom: "lstm0/m/8"
+  top: "concat0/m" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat0/h"
+  type: "Transpose"
+  bottom: "concat0/h"
+  top: "trans/concat0/h"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "trans/concat0/m"
+  type: "Transpose"
+  bottom: "concat0/m"
+  top: "trans/concat0/m"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "slicer/lstm0/m"
+  type: "Slice"
+  bottom: "trans/concat0/m"
+  top: "lstm1/m/input/1" # 8 connected dimension
+  top: "lstm1/m/input/2"
+  top: "lstm1/m/input/3"
+  top: "lstm1/m/input/4"
+  top: "lstm1/m/input/5"
+  top: "lstm1/m/input/6"
+  top: "lstm1/m/input/7"
+  top: "lstm1/m/input/8"
+  slice_param {
+    axis: 1
+    slice_point: 64
+    slice_point: 128
+    slice_point: 192
+    slice_point: 256
+    slice_point: 320
+    slice_point: 384
+    slice_point: 448
+  }
+}
+
+########################################################
+#
+#      LSTM Layer
+#
+########################################################
+
+### 1st LSTM layer
+
+layer {
+  name: "lstm1/h/input"
+  type: "Concat"
+  bottom: "trans/concat0/h" 	# 8 connected dimension
+  bottom: "lstm0/h/0" 		# depth dimension
+  top: "lstm1/h/input"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm0/m/0"
+  top: "lstm1/h/output/0"
+  top: "lstm1/m/output/0"
+  name: "lstm1/0"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights/e"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/0/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/0"
+  top: "lstm1/h/output/0"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/1"
+  top: "lstm1/h/output/1"
+  top: "lstm1/m/output/1"
+  name: "lstm1/1"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/1/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/1"
+  top: "lstm1/h/output/1"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/2"
+  top: "lstm1/h/output/2"
+  top: "lstm1/m/output/2"
+  name: "lstm1/2"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/2/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/2"
+  top: "lstm1/h/output/2"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/3"
+  top: "lstm1/h/output/3"
+  top: "lstm1/m/output/3"
+  name: "lstm1/3"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/3/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/3"
+  top: "lstm1/h/output/3"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/4"
+  top: "lstm1/h/output/4"
+  top: "lstm1/m/output/4"
+  name: "lstm1/4"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/4/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/4"
+  top: "lstm1/h/output/4"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/5"
+  top: "lstm1/h/output/5"
+  top: "lstm1/m/output/5"
+  name: "lstm1/5"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/5/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/5"
+  top: "lstm1/h/output/5"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/6"
+  top: "lstm1/h/output/6"
+  top: "lstm1/m/output/6"
+  name: "lstm1/6"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/6/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/6"
+  top: "lstm1/h/output/6"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/7"
+  top: "lstm1/h/output/7"
+  top: "lstm1/m/output/7"
+  name: "lstm1/7"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/7/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/7"
+  top: "lstm1/h/output/7"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm1/h/input"
+  bottom: "lstm1/m/input/8"
+  top: "lstm1/h/output/8"
+  top: "lstm1/m/output/8"
+  name: "lstm1/8"
+  type: "LstmUnit"
+  param{
+     name: "lstm1/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm1/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm1/h/output/8/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/output/8"
+  top: "lstm1/h/output/8"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "concat1/h"
+  type: "Concat"
+  bottom: "lstm1/h/output/1" # 8 connected dimension
+  bottom: "lstm1/h/output/2"
+  bottom: "lstm1/h/output/3"
+  bottom: "lstm1/h/output/4"
+  bottom: "lstm1/h/output/5"
+  bottom: "lstm1/h/output/6"
+  bottom: "lstm1/h/output/7"
+  bottom: "lstm1/h/output/8"
+  top: "concat1/h" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat1/h"
+  type: "Transpose"
+  bottom: "concat1/h"
+  top: "trans/concat1/h"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "lstm2/h/input"
+  type: "Concat"
+  bottom: "trans/concat1/h" 	# 8 connected dimension
+  bottom: "lstm1/h/output/0" 	# depth dimension
+  top: "lstm2/h/input"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "score1"
+  type: "Transpose"
+  bottom: "lstm2/h/input"
+  top: "score1"
+  transpose_param {
+    transposetype: LSTMOUTPUT
+    batch_size: 1
+    height: 64
+  }
+}
+
+layer {
+  name: "feedforward1"
+  type: "Convolution"
+  bottom: "score1"
+  top: "feedforward1"
+  param {
+    lr_mult: 5
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 10
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 3
+    kernel_size:1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  } 
+}
+
+layer {
+  name: "accuracy1"
+  type: "SegAccuracy"
+  bottom: "feedforward1"
+  bottom: "label_shrink"
+  top: "accuracy1"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+}
+layer {
+  name: "loss1"
+  type: "SoftmaxWithLoss"
+  bottom: "feedforward1"
+  bottom: "label_shrink"
+  top: "loss1"
+  loss_param {
+    ignore_label: 3
+  }
+  include: { phase: TRAIN }
+}
+
+
+### 2nd LSTM layer
+
+
+layer {
+  name: "concat1/m"
+  type: "Concat"
+  bottom: "lstm1/m/output/1" # 8 connected dimension
+  bottom: "lstm1/m/output/2"
+  bottom: "lstm1/m/output/3"
+  bottom: "lstm1/m/output/4"
+  bottom: "lstm1/m/output/5"
+  bottom: "lstm1/m/output/6"
+  bottom: "lstm1/m/output/7"
+  bottom: "lstm1/m/output/8"
+  top: "concat1/m" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat1/m"
+  type: "Transpose"
+  bottom: "concat1/m"
+  top: "trans/concat1/m"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "slicer/lstm1/m"
+  type: "Slice"
+  bottom: "trans/concat1/m"
+  top: "lstm2/m/input/1" # 8 connected dimension
+  top: "lstm2/m/input/2"
+  top: "lstm2/m/input/3"
+  top: "lstm2/m/input/4"
+  top: "lstm2/m/input/5"
+  top: "lstm2/m/input/6"
+  top: "lstm2/m/input/7"
+  top: "lstm2/m/input/8"
+  slice_param {
+    axis: 1
+    slice_point: 64
+    slice_point: 128
+    slice_point: 192
+    slice_point: 256
+    slice_point: 320
+    slice_point: 384
+    slice_point: 448
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm1/m/output/0"
+  top: "lstm2/h/output/0"
+  top: "lstm2/m/output/0"
+  name: "lstm2/0"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights/e"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/0/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/0"
+  top: "lstm2/h/output/0"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/1"
+  top: "lstm2/h/output/1"
+  top: "lstm2/m/output/1"
+  name: "lstm2/1"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/1/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/1"
+  top: "lstm2/h/output/1"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/2"
+  top: "lstm2/h/output/2"
+  top: "lstm2/m/output/2"
+  name: "lstm2/2"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/2/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/2"
+  top: "lstm2/h/output/2"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/3"
+  top: "lstm2/h/output/3"
+  top: "lstm2/m/output/3"
+  name: "lstm2/3"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/3/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/3"
+  top: "lstm2/h/output/3"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/4"
+  top: "lstm2/h/output/4"
+  top: "lstm2/m/output/4"
+  name: "lstm2/4"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/4/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/4"
+  top: "lstm2/h/output/4"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/5"
+  top: "lstm2/h/output/5"
+  top: "lstm2/m/output/5"
+  name: "lstm2/5"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/5/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/5"
+  top: "lstm2/h/output/5"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/6"
+  top: "lstm2/h/output/6"
+  top: "lstm2/m/output/6"
+  name: "lstm2/6"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/6/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/6"
+  top: "lstm2/h/output/6"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/7"
+  top: "lstm2/h/output/7"
+  top: "lstm2/m/output/7"
+  name: "lstm2/7"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/7/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/7"
+  top: "lstm2/h/output/7"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm2/h/input"
+  bottom: "lstm2/m/input/8"
+  top: "lstm2/h/output/8"
+  top: "lstm2/m/output/8"
+  name: "lstm2/8"
+  type: "LstmUnit"
+  param{
+     name: "lstm2/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm2/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm2/h/output/8/drop"
+  type: "Dropout"
+  bottom: "lstm2/h/output/8"
+  top: "lstm2/h/output/8"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "concat2/h"
+  type: "Concat"
+  bottom: "lstm2/h/output/1" # 8 connected dimension
+  bottom: "lstm2/h/output/2"
+  bottom: "lstm2/h/output/3"
+  bottom: "lstm2/h/output/4"
+  bottom: "lstm2/h/output/5"
+  bottom: "lstm2/h/output/6"
+  bottom: "lstm2/h/output/7"
+  bottom: "lstm2/h/output/8"
+  top: "concat2/h" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat2/h"
+  type: "Transpose"
+  bottom: "concat2/h"
+  top: "trans/concat2/h"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "lstm3/h/input"
+  type: "Concat"
+  bottom: "trans/concat2/h" 	# 8 connected dimension
+  bottom: "lstm2/h/output/0" 	# depth dimension
+  top: "lstm3/h/input"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "score2"
+  type: "Transpose"
+  bottom: "lstm3/h/input"
+  top: "score2"
+  transpose_param {
+    transposetype: LSTMOUTPUT
+    batch_size: 1
+    height: 64
+  }
+}
+
+layer {
+  name: "feedforward2"
+  type: "Convolution"
+  bottom: "score2"
+  top: "feedforward2"
+  param {
+    lr_mult: 5
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 10
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 3
+    kernel_size:1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  } 
+}
+
+layer {
+  name: "accuracy2"
+  type: "SegAccuracy"
+  bottom: "feedforward2"
+  bottom: "label_shrink"
+  top: "accuracy2"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+}
+layer {
+  name: "loss2"
+  type: "SoftmaxWithLoss"
+  bottom: "feedforward2"
+  bottom: "label_shrink"
+  top: "loss2"
+  loss_param {
+    ignore_label: 3
+  }
+  include: { phase: TRAIN }
+}
+
+
+
+### 3rd LSTM layer
+
+
+layer {
+  name: "concat2/m"
+  type: "Concat"
+  bottom: "lstm2/m/output/1" # 8 connected dimension
+  bottom: "lstm2/m/output/2"
+  bottom: "lstm2/m/output/3"
+  bottom: "lstm2/m/output/4"
+  bottom: "lstm2/m/output/5"
+  bottom: "lstm2/m/output/6"
+  bottom: "lstm2/m/output/7"
+  bottom: "lstm2/m/output/8"
+  top: "concat2/m" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat2/m"
+  type: "Transpose"
+  bottom: "concat2/m"
+  top: "trans/concat2/m"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "slicer/lstm2/m"
+  type: "Slice"
+  bottom: "trans/concat2/m"
+  top: "lstm3/m/input/1" # 8 connected dimension
+  top: "lstm3/m/input/2"
+  top: "lstm3/m/input/3"
+  top: "lstm3/m/input/4"
+  top: "lstm3/m/input/5"
+  top: "lstm3/m/input/6"
+  top: "lstm3/m/input/7"
+  top: "lstm3/m/input/8"
+  slice_param {
+    axis: 1
+    slice_point: 64
+    slice_point: 128
+    slice_point: 192
+    slice_point: 256
+    slice_point: 320
+    slice_point: 384
+    slice_point: 448
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm2/m/output/0"
+  top: "lstm3/h/output/0"
+  top: "lstm3/m/output/0"
+  name: "lstm3/0"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights/e"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/0/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/0"
+  top: "lstm3/h/output/0"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/1"
+  top: "lstm3/h/output/1"
+  top: "lstm3/m/output/1"
+  name: "lstm3/1"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/1/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/1"
+  top: "lstm3/h/output/1"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/2"
+  top: "lstm3/h/output/2"
+  top: "lstm3/m/output/2"
+  name: "lstm3/2"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/2/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/2"
+  top: "lstm3/h/output/2"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/3"
+  top: "lstm3/h/output/3"
+  top: "lstm3/m/output/3"
+  name: "lstm3/3"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/3/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/3"
+  top: "lstm3/h/output/3"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/4"
+  top: "lstm3/h/output/4"
+  top: "lstm3/m/output/4"
+  name: "lstm3/4"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/4/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/4"
+  top: "lstm3/h/output/4"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/5"
+  top: "lstm3/h/output/5"
+  top: "lstm3/m/output/5"
+  name: "lstm3/5"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/5/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/5"
+  top: "lstm3/h/output/5"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/6"
+  top: "lstm3/h/output/6"
+  top: "lstm3/m/output/6"
+  name: "lstm3/6"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/6/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/6"
+  top: "lstm3/h/output/6"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/7"
+  top: "lstm3/h/output/7"
+  top: "lstm3/m/output/7"
+  name: "lstm3/7"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/7/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/7"
+  top: "lstm3/h/output/7"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm3/h/input"
+  bottom: "lstm3/m/input/8"
+  top: "lstm3/h/output/8"
+  top: "lstm3/m/output/8"
+  name: "lstm3/8"
+  type: "LstmUnit"
+  param{
+     name: "lstm3/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm3/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm3/h/output/8/drop"
+  type: "Dropout"
+  bottom: "lstm3/h/output/8"
+  top: "lstm3/h/output/8"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "concat3/h"
+  type: "Concat"
+  bottom: "lstm3/h/output/1" # 8 connected dimension
+  bottom: "lstm3/h/output/2"
+  bottom: "lstm3/h/output/3"
+  bottom: "lstm3/h/output/4"
+  bottom: "lstm3/h/output/5"
+  bottom: "lstm3/h/output/6"
+  bottom: "lstm3/h/output/7"
+  bottom: "lstm3/h/output/8"
+  top: "concat3/h" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat3/h"
+  type: "Transpose"
+  bottom: "concat3/h"
+  top: "trans/concat3/h"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "lstm4/h/input"
+  type: "Concat"
+  bottom: "trans/concat3/h" 	# 8 connected dimension
+  bottom: "lstm3/h/output/0" 	# depth dimension
+  top: "lstm4/h/input"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "score3"
+  type: "Transpose"
+  bottom: "lstm4/h/input"
+  top: "score3"
+  transpose_param {
+    transposetype: LSTMOUTPUT
+    batch_size: 1
+    height: 64
+  }
+}
+
+layer {
+  name: "feedforward3"
+  type: "Convolution"
+  bottom: "score3"
+  top: "feedforward3"
+  param {
+    lr_mult: 5
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 10
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 3
+    kernel_size:1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  } 
+}
+
+layer {
+  name: "accuracy3"
+  type: "SegAccuracy"
+  bottom: "feedforward3"
+  bottom: "label_shrink"
+  top: "accuracy3"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+}
+layer {
+  name: "loss3"
+  type: "SoftmaxWithLoss"
+  bottom: "feedforward3"
+  bottom: "label_shrink"
+  top: "loss3"
+  loss_param {
+    ignore_label: 3
+  }
+  include: { phase: TRAIN }
+}
+
+
+
+### 4th LSTM layer
+
+
+layer {
+  name: "concat3/m"
+  type: "Concat"
+  bottom: "lstm3/m/output/1" # 8 connected dimension
+  bottom: "lstm3/m/output/2"
+  bottom: "lstm3/m/output/3"
+  bottom: "lstm3/m/output/4"
+  bottom: "lstm3/m/output/5"
+  bottom: "lstm3/m/output/6"
+  bottom: "lstm3/m/output/7"
+  bottom: "lstm3/m/output/8"
+  top: "concat3/m" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat3/m"
+  type: "Transpose"
+  bottom: "concat3/m"
+  top: "trans/concat3/m"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "slicer/lstm3/m"
+  type: "Slice"
+  bottom: "trans/concat3/m"
+  top: "lstm4/m/input/1" # 8 connected dimension
+  top: "lstm4/m/input/2"
+  top: "lstm4/m/input/3"
+  top: "lstm4/m/input/4"
+  top: "lstm4/m/input/5"
+  top: "lstm4/m/input/6"
+  top: "lstm4/m/input/7"
+  top: "lstm4/m/input/8"
+  slice_param {
+    axis: 1
+    slice_point: 64
+    slice_point: 128
+    slice_point: 192
+    slice_point: 256
+    slice_point: 320
+    slice_point: 384
+    slice_point: 448
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm3/m/output/0"
+  top: "lstm4/h/output/0"
+  top: "lstm4/m/output/0"
+  name: "lstm4/0"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights/e"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/0/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/0"
+  top: "lstm4/h/output/0"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/1"
+  top: "lstm4/h/output/1"
+  top: "lstm4/m/output/1"
+  name: "lstm4/1"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/1/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/1"
+  top: "lstm4/h/output/1"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/2"
+  top: "lstm4/h/output/2"
+  top: "lstm4/m/output/2"
+  name: "lstm4/2"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/2/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/2"
+  top: "lstm4/h/output/2"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/3"
+  top: "lstm4/h/output/3"
+  top: "lstm4/m/output/3"
+  name: "lstm4/3"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/3/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/3"
+  top: "lstm4/h/output/3"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/4"
+  top: "lstm4/h/output/4"
+  top: "lstm4/m/output/4"
+  name: "lstm4/4"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/4/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/4"
+  top: "lstm4/h/output/4"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/5"
+  top: "lstm4/h/output/5"
+  top: "lstm4/m/output/5"
+  name: "lstm4/5"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/5/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/5"
+  top: "lstm4/h/output/5"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/6"
+  top: "lstm4/h/output/6"
+  top: "lstm4/m/output/6"
+  name: "lstm4/6"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/6/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/6"
+  top: "lstm4/h/output/6"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/7"
+  top: "lstm4/h/output/7"
+  top: "lstm4/m/output/7"
+  name: "lstm4/7"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/7/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/7"
+  top: "lstm4/h/output/7"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm4/h/input"
+  bottom: "lstm4/m/input/8"
+  top: "lstm4/h/output/8"
+  top: "lstm4/m/output/8"
+  name: "lstm4/8"
+  type: "LstmUnit"
+  param{
+     name: "lstm4/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm4/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm4/h/output/8/drop"
+  type: "Dropout"
+  bottom: "lstm4/h/output/8"
+  top: "lstm4/h/output/8"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "concat4/h"
+  type: "Concat"
+  bottom: "lstm4/h/output/1" # 8 connected dimension
+  bottom: "lstm4/h/output/2"
+  bottom: "lstm4/h/output/3"
+  bottom: "lstm4/h/output/4"
+  bottom: "lstm4/h/output/5"
+  bottom: "lstm4/h/output/6"
+  bottom: "lstm4/h/output/7"
+  bottom: "lstm4/h/output/8"
+  top: "concat4/h" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat4/h"
+  type: "Transpose"
+  bottom: "concat4/h"
+  top: "trans/concat4/h"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "lstm5/h/input"
+  type: "Concat"
+  bottom: "trans/concat4/h" 	# 8 connected dimension
+  bottom: "lstm4/h/output/0" 	# depth dimension
+  top: "lstm5/h/input"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "score4"
+  type: "Transpose"
+  bottom: "lstm5/h/input"
+  top: "score4"
+  transpose_param {
+    transposetype: LSTMOUTPUT
+    batch_size: 1
+    height: 64
+  }
+}
+
+layer {
+  name: "feedforward4"
+  type: "Convolution"
+  bottom: "score4"
+  top: "feedforward4"
+  param {
+    lr_mult: 5
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 10
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 3
+    kernel_size:1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  } 
+}
+
+layer {
+  name: "accuracy4"
+  type: "SegAccuracy"
+  bottom: "feedforward4"
+  bottom: "label_shrink"
+  top: "accuracy4"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+}
+layer {
+  name: "loss4"
+  type: "SoftmaxWithLoss"
+  bottom: "feedforward4"
+  bottom: "label_shrink"
+  top: "loss4"
+  loss_param {
+    ignore_label: 3
+  }
+  include: { phase: TRAIN }
+}
+
+
+
+### 5th LSTM layer
+
+
+layer {
+  name: "concat4/m"
+  type: "Concat"
+  bottom: "lstm4/m/output/1" # 8 connected dimension
+  bottom: "lstm4/m/output/2"
+  bottom: "lstm4/m/output/3"
+  bottom: "lstm4/m/output/4"
+  bottom: "lstm4/m/output/5"
+  bottom: "lstm4/m/output/6"
+  bottom: "lstm4/m/output/7"
+  bottom: "lstm4/m/output/8"
+  top: "concat4/m" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat4/m"
+  type: "Transpose"
+  bottom: "concat4/m"
+  top: "trans/concat4/m"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "slicer/lstm4/m"
+  type: "Slice"
+  bottom: "trans/concat4/m"
+  top: "lstm5/m/input/1" # 8 connected dimension
+  top: "lstm5/m/input/2"
+  top: "lstm5/m/input/3"
+  top: "lstm5/m/input/4"
+  top: "lstm5/m/input/5"
+  top: "lstm5/m/input/6"
+  top: "lstm5/m/input/7"
+  top: "lstm5/m/input/8"
+  slice_param {
+    axis: 1
+    slice_point: 64
+    slice_point: 128
+    slice_point: 192
+    slice_point: 256
+    slice_point: 320
+    slice_point: 384
+    slice_point: 448
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm4/m/output/0"
+  top: "lstm5/h/output/0"
+  top: "lstm5/m/output/0"
+  name: "lstm5/0"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights/e"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights/e"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/0/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/0"
+  top: "lstm5/h/output/0"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/1"
+  top: "lstm5/h/output/1"
+  top: "lstm5/m/output/1"
+  name: "lstm5/1"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/1/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/1"
+  top: "lstm5/h/output/1"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/2"
+  top: "lstm5/h/output/2"
+  top: "lstm5/m/output/2"
+  name: "lstm5/2"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/2/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/2"
+  top: "lstm5/h/output/2"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/3"
+  top: "lstm5/h/output/3"
+  top: "lstm5/m/output/3"
+  name: "lstm5/3"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/3/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/3"
+  top: "lstm5/h/output/3"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/4"
+  top: "lstm5/h/output/4"
+  top: "lstm5/m/output/4"
+  name: "lstm5/4"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/4/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/4"
+  top: "lstm5/h/output/4"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/5"
+  top: "lstm5/h/output/5"
+  top: "lstm5/m/output/5"
+  name: "lstm5/5"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/5/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/5"
+  top: "lstm5/h/output/5"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/6"
+  top: "lstm5/h/output/6"
+  top: "lstm5/m/output/6"
+  name: "lstm5/6"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/6/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/6"
+  top: "lstm5/h/output/6"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/7"
+  top: "lstm5/h/output/7"
+  top: "lstm5/m/output/7"
+  name: "lstm5/7"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/7/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/7"
+  top: "lstm5/h/output/7"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  bottom: "lstm5/h/input"
+  bottom: "lstm5/m/input/8"
+  top: "lstm5/h/output/8"
+  top: "lstm5/m/output/8"
+  name: "lstm5/8"
+  type: "LstmUnit"
+  param{
+     name: "lstm5/input_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/input_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/forget_gate_weights"
+     lr_mult: 10
+  }
+  param{
+     name: "lstm5/output_gate_weights"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+
+layer {
+  name: "lstm5/h/output/8/drop"
+  type: "Dropout"
+  bottom: "lstm5/h/output/8"
+  top: "lstm5/h/output/8"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "concat5/h"
+  type: "Concat"
+  bottom: "lstm5/h/output/1" # 8 connected dimension
+  bottom: "lstm5/h/output/2"
+  bottom: "lstm5/h/output/3"
+  bottom: "lstm5/h/output/4"
+  bottom: "lstm5/h/output/5"
+  bottom: "lstm5/h/output/6"
+  bottom: "lstm5/h/output/7"
+  bottom: "lstm5/h/output/8"
+  top: "concat5/h" 
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "trans/concat5/h"
+  type: "Transpose"
+  bottom: "concat5/h"
+  top: "trans/concat5/h"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+
+layer {
+  name: "lstm6/h/input"
+  type: "Concat"
+  bottom: "trans/concat5/h" 	# 8 connected dimension
+  bottom: "lstm5/h/output/0" 	# depth dimension
+  top: "lstm6/h/input"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "score5"
+  type: "Transpose"
+  bottom: "lstm6/h/input"
+  top: "score5"
+  transpose_param {
+    transposetype: LSTMOUTPUT
+    batch_size: 1
+    height: 64
+  }
+}
+
+layer {
+  name: "feedforward5"
+  type: "Convolution"
+  bottom: "score5"
+  top: "feedforward5"
+  param {
+    lr_mult: 5
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 10
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 3
+    kernel_size:1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  } 
+}
+
+layer {
+  name: "accuracy5"
+  type: "SegAccuracy"
+  bottom: "feedforward5"
+  bottom: "label_shrink"
+  top: "accuracy5"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+}
+layer {
+  name: "loss5"
+  type: "SoftmaxWithLoss"
+  bottom: "feedforward5"
+  bottom: "label_shrink"
+  top: "loss5"
+  loss_param {
+    ignore_label: 3
+  }
+  include: { phase: TRAIN }
+}
+
+
+
+############ silence
+
+layer {
+  name: "silence0"
+  type: "Silence"
+  bottom: "lstm5/m/output/0"
+}
+layer {
+  name: "silence1"
+  type: "Silence"
+  bottom: "lstm5/m/output/1"
+}
+layer {
+  name: "silence2"
+  type: "Silence"
+  bottom: "lstm5/m/output/2"
+}
+layer {
+  name: "silence3"
+  type: "Silence"
+  bottom: "lstm5/m/output/3"
+}
+layer {
+  name: "silence4"
+  type: "Silence"
+  bottom: "lstm5/m/output/4"
+}
+layer {
+  name: "silence5"
+  type: "Silence"
+  bottom: "lstm5/m/output/5"
+}
+layer {
+  name: "silence6"
+  type: "Silence"
+  bottom: "lstm5/m/output/6"
+}
+layer {
+  name: "silence7"
+  type: "Silence"
+  bottom: "lstm5/m/output/7"
+}
+layer {
+  name: "silence8"
+  type: "Silence"
+  bottom: "lstm5/m/output/8"
+}

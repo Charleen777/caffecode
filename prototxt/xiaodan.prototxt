@@ -1,0 +1,290 @@
+name: "xiaodan"
+
+
+layer{
+  name: "data"
+  type: "ImageSegData" 
+  top: "data"
+  top: "label"
+  image_data_param {
+    root_folder: "../dataset/SiftFlowDataset/"
+    source: "../dataset/SiftFlowDataset/trainList.txt"
+    label_type: PIXEL
+    batch_size: 1 #16 #30
+    shuffle: false
+  }
+  transform_param {
+    mean_value: 108.5138  # SiftFlowDataset
+    mean_value: 115.3204
+    mean_value: 114.9225
+    crop_size: 0
+    mirror: false
+  }
+  include: { phase: TRAIN }
+}
+layer{
+  name: "data"
+  type: "ImageSegData" 
+  top: "data"
+  top: "label"
+  image_data_param {
+    root_folder: "../dataset/SiftFlowDataset/"
+    source: "../dataset/SiftFlowDataset/trainList.txt"
+    label_type: PIXEL
+    batch_size: 1 #16 #30
+  }
+  transform_param {
+    mean_value: 108.5138  # SiftFlowDataset
+    mean_value: 115.3204
+    mean_value: 114.9225
+    crop_size: 0
+    mirror: false
+  }
+  include: { phase: TEST }
+}
+
+
+layer { bottom: 'data' top: 'conv1_1' name: 'conv1_1' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 64 pad: 100 kernel_size: 3 } }
+layer { bottom: 'conv1_1' top: 'conv1_1' name: 'relu1_1' type: "ReLU" }
+layer { bottom: 'conv1_1' top: 'conv1_2' name: 'conv1_2' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 64 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv1_2' top: 'conv1_2' name: 'relu1_2' type: "ReLU" }
+layer { name: 'pool1' bottom: 'conv1_2' top: 'pool1' type: "Pooling"
+  pooling_param { pool: MAX kernel_size: 2 stride: 2 } }
+layer { name: 'conv2_1' bottom: 'pool1' top: 'conv2_1' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 128 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv2_1' top: 'conv2_1' name: 'relu2_1' type: "ReLU" }
+layer { bottom: 'conv2_1' top: 'conv2_2' name: 'conv2_2' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 128 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv2_2' top: 'conv2_2' name: 'relu2_2' type: "ReLU" }
+layer { bottom: 'conv2_2' top: 'pool2' name: 'pool2' type: "Pooling"
+  pooling_param { pool: MAX kernel_size: 2 stride: 2 } }
+layer { bottom: 'pool2' top: 'conv3_1' name: 'conv3_1' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 256 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv3_1' top: 'conv3_1' name: 'relu3_1' type: "ReLU" }
+layer { bottom: 'conv3_1' top: 'conv3_2' name: 'conv3_2' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 256 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv3_2' top: 'conv3_2' name: 'relu3_2' type: "ReLU" }
+layer { bottom: 'conv3_2' top: 'conv3_3' name: 'conv3_3' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 256 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv3_3' top: 'conv3_3' name: 'relu3_3' type: "ReLU" }
+layer { bottom: 'conv3_3' top: 'pool3' name: 'pool3' type: "Pooling"
+  pooling_param { pool: MAX kernel_size: 2 stride: 2 } }
+layer { bottom: 'pool3' top: 'conv4_1' name: 'conv4_1' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 512 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv4_1' top: 'conv4_1' name: 'relu4_1' type: "ReLU" }
+layer { bottom: 'conv4_1' top: 'conv4_2' name: 'conv4_2' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 512 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv4_2' top: 'conv4_2' name: 'relu4_2' type: "ReLU" }
+layer { bottom: 'conv4_2' top: 'conv4_3' name: 'conv4_3' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 512 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv4_3' top: 'conv4_3' name: 'relu4_3' type: "ReLU" }
+layer { bottom: 'conv4_3' top: 'pool4' name: 'pool4' type: "Pooling"
+  pooling_param { pool: MAX kernel_size: 2 stride: 2 } }
+layer { bottom: 'pool4' top: 'conv5_1' name: 'conv5_1' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 512 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv5_1' top: 'conv5_1' name: 'relu5_1' type: "ReLU" }
+layer { bottom: 'conv5_1' top: 'conv5_2' name: 'conv5_2' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 512 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv5_2' top: 'conv5_2' name: 'relu5_2' type: "ReLU" }
+layer { bottom: 'conv5_2' top: 'conv5_3' name: 'conv5_3' type: "Convolution"
+  convolution_param { engine: CAFFE num_output: 512 pad: 1 kernel_size: 3 } }
+layer { bottom: 'conv5_3' top: 'conv5_3' name: 'relu5_3' type: "ReLU" }
+layer { bottom: 'conv5_3' top: 'pool5' name: 'pool5' type: "Pooling"
+  pooling_param { pool: MAX kernel_size: 2 stride: 2 } }
+layer { bottom: 'pool5' top: 'fc6' name: 'fc6' type: "Convolution"
+  convolution_param { engine: CAFFE kernel_size: 7 num_output: 4096 } }
+layer { bottom: 'fc6' top: 'fc6' name: 'relu6' type: "ReLU" }
+layer { bottom: 'fc6' top: 'fc6' name: 'drop6' type: "Dropout"
+  dropout_param { dropout_ratio: 0.5 } }
+layer { bottom: 'fc6' top: 'fc7' name: 'fc7' type: "Convolution"
+  convolution_param { engine: CAFFE kernel_size: 1 num_output: 4096 } }
+layer { bottom: 'fc7' top: 'fc7' name: 'relu7' type: "ReLU" }
+layer { bottom: 'fc7' top: 'fc7' name: 'drop7' type: "Dropout"
+  dropout_param { dropout_ratio: 0.5 } }
+
+
+
+layer {
+  name: "upsample/fc7"
+  type: "Deconvolution"
+  bottom: "fc7"
+  top: "upsample/fc7"
+  convolution_param {
+    kernel_size: 16		#{{2 * factor - factor % 2}}
+    stride: 8			#{{factor}}
+    num_output: 4096   		#{{C}}
+    group: 4096   		#{{C}}
+    pad: 8			#{{ceil((factor - 1) / 2.)}}
+    weight_filler: {
+      type: "bilinear"
+    }
+    bias_term: false
+  }
+  param {
+    lr_mult: 1.
+    decay_mult: 0
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+layer {
+  name: "lstm_input"
+  type: "Transpose"
+  bottom: "upsample/fc7"
+  top: "lstm_input"
+  transpose_param {
+    transposetype: LSTMINPUT
+  }
+}
+
+layer {
+  name: "zero_data"
+  type: "ZerosData"
+  top: "lstm_hidden_seed"
+  zeros_data_param {
+    shape: 4096 #batch number
+    shape: 64
+  }
+}
+layer {
+  name: "zero_data2"
+  type: "ZerosData"
+  top: "lstm_mem_seed"
+  zeros_data_param {
+    shape: 4096 #batch number
+    shape: 64
+  }
+}
+##the first lstm
+layer {
+  name: "concat1/h"
+  type: "Concat"
+  bottom: "lstm_hidden_seed"
+  bottom: "lstm_hidden_seed"
+  bottom: "lstm_hidden_seed"
+  bottom: "lstm_hidden_seed"
+  bottom: "lstm_hidden_seed"
+  bottom: "lstm_hidden_seed"
+  bottom: "lstm_hidden_seed"
+  bottom: "lstm_hidden_seed"
+  top: "concat1/h" 
+}
+layer {
+  name: "trans/concat1"
+  type: "Transpose"
+  bottom: "concat1/h"
+  top: "lstm1/h/input"
+  transpose_param {
+    transposetype: GRIDLSTM
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+layer {
+  name: "concat1_all"
+  type: "Concat"
+  bottom: "lstm_input"	
+  bottom: "lstm_hidden_seed" #depth dimension
+  bottom: "lstm1/h/input" #8 connected dimension 
+  top: "lstm1/h/input/all" 
+}
+layer {
+  bottom: "lstm1/h/input/all"
+  bottom: "lstm_mem_seed"
+  top: "lstm1/h/1"
+  top: "lstm1/c/1"
+  name: "lstm1/1"
+  type: "LstmUnit"
+  param{
+     name: "input_weights/1"
+     lr_mult: 10
+  }
+  param{
+     name: "input_gate_weights/1"
+     lr_mult: 10
+  }
+  param{
+     name: "forget_gate_weights/1"
+     lr_mult: 10
+  }
+  param{
+     name: "output_gate_weights/1"
+     lr_mult: 10
+  }
+  lstm_unit_param {
+    num_cells: 64
+    input_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    input_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01    
+    }
+    forget_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01
+    }
+    output_gate_weight_filler {
+      type: "uniform"
+      min: -0.01
+      max: 0.01      
+    }
+  }
+}
+layer {
+  name: "lstm1/1/drop"
+  type: "Dropout"
+  bottom: "lstm1/h/1"
+  top: "lstm1/h/1"
+  dropout_param {
+     dropout_ratio: 0.5
+  }
+} 
+layer {
+  name: "lstm_output"
+  type: "Transpose"
+  bottom: "lstm1/h/1"
+  top: "lstm_output"
+  transpose_param {
+    transposetype: LSTMOUTPUT
+    batch_size: 1
+    local_connected_num: 8
+    height: 64
+  }
+}
+layer {
+  name: "silence"
+  type: "Silence"
+  bottom: "lstm1/c/1"
+}
+layer {
+  name: "silenceh"
+  type: "Silence"
+  bottom: "lstm_output"
+}
+layer {
+  name: "silencel"
+  type: "Silence"
+  bottom: "label"
+}
