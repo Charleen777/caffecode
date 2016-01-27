@@ -101,3 +101,5 @@ tags
 result
 logfile
 examples
+Makefile
+Makefile.config
