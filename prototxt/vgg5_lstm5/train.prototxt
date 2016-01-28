@@ -953,13 +953,13 @@ layer {
   top: "lstm1/m/input/8"
   slice_param {
     axis: 1
+    slice_point: 32
     slice_point: 64
+    slice_point: 96
     slice_point: 128
+    slice_point: 160
     slice_point: 192
-    slice_point: 256
-    slice_point: 320
-    slice_point: 384
-    slice_point: 448
+    slice_point: 224
   }
 }
 
@@ -1654,13 +1654,13 @@ layer {
   top: "lstm2/m/input/8"
   slice_param {
     axis: 1
+    slice_point: 32
     slice_point: 64
+    slice_point: 96
     slice_point: 128
+    slice_point: 160
     slice_point: 192
-    slice_point: 256
-    slice_point: 320
-    slice_point: 384
-    slice_point: 448
+    slice_point: 224
   }
 }
 
@@ -2337,13 +2337,13 @@ layer {
   top: "lstm3/m/input/8"
   slice_param {
     axis: 1
+    slice_point: 32
     slice_point: 64
+    slice_point: 96
     slice_point: 128
+    slice_point: 160
     slice_point: 192
-    slice_point: 256
-    slice_point: 320
-    slice_point: 384
-    slice_point: 448
+    slice_point: 224
   }
 }
 
@@ -3020,13 +3020,13 @@ layer {
   top: "lstm4/m/input/8"
   slice_param {
     axis: 1
+    slice_point: 32
     slice_point: 64
+    slice_point: 96
     slice_point: 128
+    slice_point: 160
     slice_point: 192
-    slice_point: 256
-    slice_point: 320
-    slice_point: 384
-    slice_point: 448
+    slice_point: 224
   }
 }
 
@@ -3703,13 +3703,13 @@ layer {
   top: "lstm5/m/input/8"
   slice_param {
     axis: 1
+    slice_point: 32
     slice_point: 64
+    slice_point: 96
     slice_point: 128
+    slice_point: 160
     slice_point: 192
-    slice_point: 256
-    slice_point: 320
-    slice_point: 384
-    slice_point: 448
+    slice_point: 224
   }
 }
 
