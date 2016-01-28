@@ -386,7 +386,7 @@ layer {
   top: "lstm_mem_seed"
   zeros_data_param {
     shape: 4096  #batch number
-    shape: 64
+    shape: 32
   }
 }
 
@@ -410,7 +410,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -465,7 +465,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -519,7 +519,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -573,7 +573,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -627,7 +627,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -681,7 +681,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -735,7 +735,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -789,7 +789,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -843,7 +843,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1006,7 +1006,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1064,7 +1064,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1122,7 +1122,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1180,7 +1180,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1238,7 +1238,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1296,7 +1296,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1354,7 +1354,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1412,7 +1412,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1470,7 +1470,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1688,7 +1688,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1746,7 +1746,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1804,7 +1804,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1862,7 +1862,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1920,7 +1920,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -1978,7 +1978,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2036,7 +2036,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2094,7 +2094,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2152,7 +2152,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2371,7 +2371,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2429,7 +2429,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2487,7 +2487,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2545,7 +2545,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2603,7 +2603,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2661,7 +2661,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2719,7 +2719,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2777,7 +2777,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -2835,7 +2835,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3054,7 +3054,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3112,7 +3112,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3170,7 +3170,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3228,7 +3228,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3286,7 +3286,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3344,7 +3344,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3402,7 +3402,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3460,7 +3460,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3518,7 +3518,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3737,7 +3737,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3795,7 +3795,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3853,7 +3853,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3911,7 +3911,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -3969,7 +3969,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -4027,7 +4027,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -4085,7 +4085,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -4143,7 +4143,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
@@ -4201,7 +4201,7 @@ layer {
      lr_mult: 10
   }
   lstm_unit_param {
-    num_cells: 64
+    num_cells: 32
     input_weight_filler {
       type: "uniform"
       min: -0.01
