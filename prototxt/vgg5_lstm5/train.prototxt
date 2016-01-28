@@ -34,7 +34,7 @@ layer{
   top: "label"
   image_data_param {
     root_folder: "../dataset/SiftFlowDataset/"
-    source: "../dataset/SiftFlowDataset/trainList.txt"
+    source: "../dataset/SiftFlowDataset/testList.txt"
     label_type: PIXEL
     batch_size: 1 #16 #30
   }
@@ -58,6 +58,7 @@ layer {
     pad_beg: 0
     pad_end: 0
   }
+  include: { phase: TRAIN }
 }
 ########################################################
 #
@@ -1593,6 +1594,7 @@ layer {
   seg_accuracy_param {
     ignore_label: 3
   } 
+  include: { phase: TRAIN }
 }
 layer {
   name: "loss1"
@@ -1604,6 +1606,33 @@ layer {
     ignore_label: 3
   }
   include: { phase: TRAIN }
+}
+
+layer {
+  bottom: "feedforward1"
+  top: "upsample/feedforward1"
+  name: "upsample/feedforward1"
+  type: "Interp"
+  interp_param {
+    #zoom_factor: 4
+    height: 256
+    width: 256
+    pad_beg: 0
+    pad_end: 0
+  }
+  include: { phase: TEST }
+}
+
+layer {
+  name: "accuracy1"
+  type: "SegAccuracy"
+  bottom: "upsample/feedforward1"
+  bottom: "label"
+  top: "accuracy1"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+  include: { phase: TEST }
 }
 
 
@@ -2275,6 +2304,7 @@ layer {
   seg_accuracy_param {
     ignore_label: 3
   } 
+  include: { phase: TRAIN }
 }
 layer {
   name: "loss2"
@@ -2288,6 +2318,32 @@ layer {
   include: { phase: TRAIN }
 }
 
+layer {
+  bottom: "feedforward2"
+  top: "upsample/feedforward2"
+  name: "upsample/feedforward2"
+  type: "Interp"
+  interp_param {
+    #zoom_factor: 4
+    height: 256
+    width: 256
+    pad_beg: 0
+    pad_end: 0
+  }
+  include: { phase: TEST }
+}
+
+layer {
+  name: "accuracy2"
+  type: "SegAccuracy"
+  bottom: "upsample/feedforward2"
+  bottom: "label"
+  top: "accuracy2"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+  include: { phase: TEST }
+}
 
 
 ### 3rd LSTM layer
@@ -2958,6 +3014,7 @@ layer {
   seg_accuracy_param {
     ignore_label: 3
   } 
+  include: { phase: TRAIN }
 }
 layer {
   name: "loss3"
@@ -2971,6 +3028,32 @@ layer {
   include: { phase: TRAIN }
 }
 
+layer {
+  bottom: "feedforward3"
+  top: "upsample/feedforward3"
+  name: "upsample/feedforward3"
+  type: "Interp"
+  interp_param {
+    #zoom_factor: 4
+    height: 256
+    width: 256
+    pad_beg: 0
+    pad_end: 0
+  }
+  include: { phase: TEST }
+}
+
+layer {
+  name: "accuracy3"
+  type: "SegAccuracy"
+  bottom: "upsample/feedforward3"
+  bottom: "label"
+  top: "accuracy3"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+  include: { phase: TEST }
+}
 
 
 ### 4th LSTM layer
@@ -3641,6 +3724,7 @@ layer {
   seg_accuracy_param {
     ignore_label: 3
   } 
+  include: { phase: TRAIN }
 }
 layer {
   name: "loss4"
@@ -3654,6 +3738,32 @@ layer {
   include: { phase: TRAIN }
 }
 
+layer {
+  bottom: "feedforward4"
+  top: "upsample/feedforward4"
+  name: "upsample/feedforward4"
+  type: "Interp"
+  interp_param {
+    #zoom_factor: 4
+    height: 256
+    width: 256
+    pad_beg: 0
+    pad_end: 0
+  }
+  include: { phase: TEST }
+}
+
+layer {
+  name: "accuracy4"
+  type: "SegAccuracy"
+  bottom: "upsample/feedforward4"
+  bottom: "label"
+  top: "accuracy4"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+  include: { phase: TEST }
+}
 
 
 ### 5th LSTM layer
@@ -4324,6 +4434,7 @@ layer {
   seg_accuracy_param {
     ignore_label: 3
   } 
+  include: { phase: TRAIN }
 }
 layer {
   name: "loss5"
@@ -4337,6 +4448,32 @@ layer {
   include: { phase: TRAIN }
 }
 
+layer {
+  bottom: "feedforward5"
+  top: "upsample/feedforward5"
+  name: "upsample/feedforward5"
+  type: "Interp"
+  interp_param {
+    #zoom_factor: 4
+    height: 256
+    width: 256
+    pad_beg: 0
+    pad_end: 0
+  }
+  include: { phase: TEST }
+}
+
+layer {
+  name: "accuracy5"
+  type: "SegAccuracy"
+  bottom: "upsample/feedforward5"
+  bottom: "label"
+  top: "accuracy5"
+  seg_accuracy_param {
+    ignore_label: 3
+  } 
+  include: { phase: TEST }
+}
 
 
 ############ silence
