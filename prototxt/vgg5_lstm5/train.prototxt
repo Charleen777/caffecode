@@ -1049,19 +1049,19 @@ layer {
   name: "lstm1/1"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1107,19 +1107,19 @@ layer {
   name: "lstm1/2"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1165,19 +1165,19 @@ layer {
   name: "lstm1/3"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1223,19 +1223,19 @@ layer {
   name: "lstm1/4"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1281,19 +1281,19 @@ layer {
   name: "lstm1/5"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1339,19 +1339,19 @@ layer {
   name: "lstm1/6"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1397,19 +1397,19 @@ layer {
   name: "lstm1/7"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1455,19 +1455,19 @@ layer {
   name: "lstm1/8"
   type: "LstmUnit"
   param{
-     name: "lstm1/input_weights"
+#     name: "lstm1/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/input_gate_weights"
+#     name: "lstm1/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/forget_gate_weights"
+#     name: "lstm1/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm1/output_gate_weights"
+#     name: "lstm1/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1759,19 +1759,19 @@ layer {
   name: "lstm2/1"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1817,19 +1817,19 @@ layer {
   name: "lstm2/2"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1875,19 +1875,19 @@ layer {
   name: "lstm2/3"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1933,19 +1933,19 @@ layer {
   name: "lstm2/4"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -1991,19 +1991,19 @@ layer {
   name: "lstm2/5"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2049,19 +2049,19 @@ layer {
   name: "lstm2/6"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2107,19 +2107,19 @@ layer {
   name: "lstm2/7"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2165,19 +2165,19 @@ layer {
   name: "lstm2/8"
   type: "LstmUnit"
   param{
-     name: "lstm2/input_weights"
+#     name: "lstm2/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/input_gate_weights"
+#     name: "lstm2/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/forget_gate_weights"
+#     name: "lstm2/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm2/output_gate_weights"
+#     name: "lstm2/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2469,19 +2469,19 @@ layer {
   name: "lstm3/1"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2527,19 +2527,19 @@ layer {
   name: "lstm3/2"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2585,19 +2585,19 @@ layer {
   name: "lstm3/3"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2643,19 +2643,19 @@ layer {
   name: "lstm3/4"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2701,19 +2701,19 @@ layer {
   name: "lstm3/5"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2759,19 +2759,19 @@ layer {
   name: "lstm3/6"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2817,19 +2817,19 @@ layer {
   name: "lstm3/7"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -2875,19 +2875,19 @@ layer {
   name: "lstm3/8"
   type: "LstmUnit"
   param{
-     name: "lstm3/input_weights"
+#     name: "lstm3/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/input_gate_weights"
+#     name: "lstm3/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/forget_gate_weights"
+#     name: "lstm3/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm3/output_gate_weights"
+#     name: "lstm3/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3179,19 +3179,19 @@ layer {
   name: "lstm4/1"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3237,19 +3237,19 @@ layer {
   name: "lstm4/2"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3295,19 +3295,19 @@ layer {
   name: "lstm4/3"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3353,19 +3353,19 @@ layer {
   name: "lstm4/4"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3411,19 +3411,19 @@ layer {
   name: "lstm4/5"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3469,19 +3469,19 @@ layer {
   name: "lstm4/6"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3527,19 +3527,19 @@ layer {
   name: "lstm4/7"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3585,19 +3585,19 @@ layer {
   name: "lstm4/8"
   type: "LstmUnit"
   param{
-     name: "lstm4/input_weights"
+#     name: "lstm4/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/input_gate_weights"
+#     name: "lstm4/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/forget_gate_weights"
+#     name: "lstm4/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm4/output_gate_weights"
+#     name: "lstm4/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3889,19 +3889,19 @@ layer {
   name: "lstm5/1"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -3947,19 +3947,19 @@ layer {
   name: "lstm5/2"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -4005,19 +4005,19 @@ layer {
   name: "lstm5/3"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -4063,19 +4063,19 @@ layer {
   name: "lstm5/4"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -4121,19 +4121,19 @@ layer {
   name: "lstm5/5"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -4179,19 +4179,19 @@ layer {
   name: "lstm5/6"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -4237,19 +4237,19 @@ layer {
   name: "lstm5/7"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
@@ -4295,19 +4295,19 @@ layer {
   name: "lstm5/8"
   type: "LstmUnit"
   param{
-     name: "lstm5/input_weights"
+#     name: "lstm5/input_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/input_gate_weights"
+#     name: "lstm5/input_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/forget_gate_weights"
+#     name: "lstm5/forget_gate_weights"
      lr_mult: 10
   }
   param{
-     name: "lstm5/output_gate_weights"
+#     name: "lstm5/output_gate_weights"
      lr_mult: 10
   }
   lstm_unit_param {
