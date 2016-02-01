@@ -68,9 +68,9 @@ void SegAccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   int top_k = 1;  // only support for top_k = 1
 
   // remove old predictions if reset() flag is true
-  if (this->layer_param_.seg_accuracy_param().reset()) {
-    confusion_matrix_.clear();
-  }
+  //if (this->layer_param_.seg_accuracy_param().reset()) {
+  //  confusion_matrix_.clear();
+  //}
 
   for (int i = 0; i < num; ++i) {
     for (int h = 0; h < height; ++h) {
@@ -166,5 +166,5 @@ void SegAccuracyLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 }
 
 INSTANTIATE_CLASS(SegAccuracyLayer);
-REGISTER_LAYER_CLASS(SEG_ACCURACY, SegAccuracyLayer);
+REGISTER_LAYER_CLASS(SegAccuracy);
 }  // namespace caffe
